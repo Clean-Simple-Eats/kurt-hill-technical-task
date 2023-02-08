@@ -1,0 +1,29 @@
+[
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "publisher": "J. B. Lippincott & Co.",
+    "publication_date": "July 11, 1960",
+    "genre": "Novel",
+    "tags": ["Classic", "Southern Gothic", "Law"],
+    "image": "https://picsum.photos/200"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "publisher": "Charles Scribner's Sons",
+    "publication_date": "April 10, 1925",
+    "genre": "Novel",
+    "tags": ["Classic", "Jazz Age", "American Dream"],
+    "image": "https://picsum.photos/200"
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "publisher": "Thomas Egerton",
+    "publication_date": "January 28, 1813",
+    "genre": "Novel",
+    "tags": ["Classic", "Romance", "Society"],
+    "image": "https://picsum.photos/200"
+  }
+]
