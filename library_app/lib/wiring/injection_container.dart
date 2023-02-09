@@ -4,12 +4,20 @@ import 'package:library_app/data/file_provider.dart';
 import 'package:library_app/data/serialization/library_deserializer.dart';
 import 'package:library_app/logic/repository/library_repository.dart';
 import 'package:library_app/logic/usecases/get_library.dart';
+import 'package:library_app/presentation/bloc/library_bloc.dart';
 import 'package:library_app/repository/datasources/library_datasource.dart';
 import 'package:library_app/repository/library_repository.dart';
 
 final GetIt sl = GetIt.instance;
 
-initDI() {
+void initDI() {
+  // Bloc
+  sl.registerFactory(
+    () => LibraryBloc(
+      getLibrary: sl(),
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(
     () => GetLibrary(
