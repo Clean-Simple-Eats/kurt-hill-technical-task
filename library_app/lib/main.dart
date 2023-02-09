@@ -12,12 +12,14 @@ class LibraryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.fromSeed(seedColor: Colors.deepPurple);
     return MaterialApp.router(
       routerConfig: router,
       title: 'CSE Library App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: colorScheme,
         useMaterial3: true,
+        scaffoldBackgroundColor: colorScheme.background,
       ),
     );
   }

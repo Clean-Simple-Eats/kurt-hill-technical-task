@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_app/ui/widgets/book_image.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class BookListItem extends StatelessWidget {
@@ -24,16 +25,7 @@ class BookListItem extends StatelessWidget {
         children: [
           Hero(
             tag: title + imageUrl,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                fit: BoxFit.cover,
-                image: imageUrl,
-                width: 150,
-                height: 200,
-              ),
-            ),
+            child: BookImage(bookImageUrl: imageUrl),
           ),
           const SizedBox(height: 4),
           Text(
