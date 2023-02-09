@@ -18,18 +18,22 @@ class LibraryFileDatasource implements ILibraryDatasource {
 
   @override
   Future<Either<Failure, Library>> getLibrary() async {
-    if (filePath.isEmpty) {
-      return const Left(
-        Failure(
-          message: '',
-        ),
-      );
+    try {
+      if (filePath.isEmpty) {
+        return const Left(
+          Failure(
+            message: '',
+          ),
+        );
+      }
+
+      final fileContents = await fileProvider.getFileContents(filePath);
+
+      final library = libraryDeserializer.deserialize(fileContents);
+
+      return Right(library);
+    } catch (e) {
+      return Left(Failure(message: '$e'));
     }
-
-    final fileContents = await fileProvider.getFileContents(filePath);
-
-    final library = libraryDeserializer.deserialize(fileContents);
-
-    return Right(library);
   }
 }

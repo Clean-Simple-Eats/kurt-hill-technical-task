@@ -57,7 +57,7 @@ void main() {
       );
     });
 
-    test('Get library with non-empty file path failure', () async {
+    test('Get library with non-empty file path success', () async {
       const fileContents = 'fileContents';
       final mockLibrary = MockLibrary();
 
@@ -70,6 +70,20 @@ void main() {
       final library = await datasource.getLibrary();
 
       expect(library, equals(Right(mockLibrary)));
+    });
+
+    test('Get library with non-empty file path exception', () async {
+      const fileContents = 'fileContents';
+
+      when(() => fileProvider.getFileContents(filePath))
+          .thenAnswer((_) => Future.value(fileContents));
+
+      when(() => libraryDeserializer.deserialize(fileContents))
+          .thenThrow(Exception());
+
+      final library = await datasource.getLibrary();
+
+      expect(library, equals(isA<Left>()));
     });
   });
 }
