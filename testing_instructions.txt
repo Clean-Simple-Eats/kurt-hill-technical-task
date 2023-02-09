@@ -1,0 +1,12 @@
+The app receives the data json file to use via command line argument.
+
+To run the app via command line:
+$ flutter run --dart-define=FILE=data.json
+
+To run the app via vscode:
+- There is already a launch.json config file set up to pass the file as an argument, so simply hit play in vscode with the "Main" configuration selected.
+
+To run the app via Android Studio:
+- Select the project dropdown and go to Edit Configurations.
+- Add --dart-define=FILE=data.json to the "Additional run args" field.
+- Hit play.
