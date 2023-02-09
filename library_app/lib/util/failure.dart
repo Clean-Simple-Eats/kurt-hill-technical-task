@@ -1,7 +1,7 @@
 class Failure {
   final String message;
 
-  Failure({
+  const Failure({
     required this.message,
   });
 }

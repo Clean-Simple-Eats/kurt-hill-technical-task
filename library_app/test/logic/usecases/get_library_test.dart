@@ -32,14 +32,14 @@ void main() {
     });
 
     test('Get library failure', () async {
-      final failure = Failure(message: '');
+      const failure = Failure(message: '');
 
       when(() => repository.getLibrary())
-          .thenAnswer((invocation) => Future.value(Left(failure)));
+          .thenAnswer((_) => Future.value(const Left(failure)));
 
       final library = await usecase(NoParams());
 
-      expect(library, equals(Left(failure)));
+      expect(library, equals(const Left(failure)));
     });
   });
 }
