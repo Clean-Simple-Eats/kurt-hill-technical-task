@@ -5,16 +5,12 @@ import 'package:library_app/logic/usecases/get_library.dart';
 import 'package:library_app/presentation/bloc/library_bloc.dart';
 import 'package:library_app/presentation/bloc/library_event.dart';
 import 'package:library_app/presentation/bloc/library_state.dart';
-import 'package:library_app/util/failure.dart';
 import 'package:library_app/util/no_params.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../shared/mocks.dart';
 
 class MockGetLibrary extends Mock implements GetLibrary {}
-
-// class MockLibraryBloc extends MockBloc<LibraryEvent, LibraryState>
-//     implements LibraryBloc {}
 
 void main() {
   group('LibraryBloc tests', () {

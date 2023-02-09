@@ -36,11 +36,11 @@ void initDI() {
   sl.registerLazySingleton(() => FileProvider());
   sl.registerLazySingleton(() => LibraryDeserializer());
   sl.registerLazySingleton<ILibraryDatasource>(() {
-    const filePath = String.fromEnvironment("FILE");
+    const fileName = String.fromEnvironment("FILE");
 
-    if (filePath.isNotEmpty) {
+    if (fileName.isNotEmpty) {
       return LibraryFileDatasource(
-        filePath: filePath,
+        fileName: fileName,
         fileProvider: sl(),
         libraryDeserializer: sl(),
       );

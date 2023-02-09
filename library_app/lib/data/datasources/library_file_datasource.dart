@@ -6,12 +6,12 @@ import 'package:library_app/repository/datasources/library_datasource.dart';
 import 'package:library_app/util/failure.dart';
 
 class LibraryFileDatasource implements ILibraryDatasource {
-  final String filePath;
+  final String fileName;
   final FileProvider fileProvider;
   final LibraryDeserializer libraryDeserializer;
 
   const LibraryFileDatasource({
-    required this.filePath,
+    required this.fileName,
     required this.fileProvider,
     required this.libraryDeserializer,
   });
@@ -19,7 +19,7 @@ class LibraryFileDatasource implements ILibraryDatasource {
   @override
   Future<Either<Failure, Library>> getLibrary() async {
     try {
-      if (filePath.isEmpty) {
+      if (fileName.isEmpty) {
         return const Left(
           Failure(
             message: '',
@@ -27,7 +27,7 @@ class LibraryFileDatasource implements ILibraryDatasource {
         );
       }
 
-      final fileContents = await fileProvider.getFileContents(filePath);
+      final fileContents = await fileProvider.getFileContents(fileName);
 
       final library = libraryDeserializer.deserialize(fileContents);
 

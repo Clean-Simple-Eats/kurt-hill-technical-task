@@ -22,7 +22,7 @@ void main() {
       fileProvider = MockFileProvider();
       libraryDeserializer = MockLibraryDeserializer();
       datasource = LibraryFileDatasource(
-        filePath: '',
+        fileName: '',
         fileProvider: fileProvider,
         libraryDeserializer: libraryDeserializer,
       );
@@ -45,13 +45,13 @@ void main() {
     late LibraryDeserializer libraryDeserializer;
     late LibraryFileDatasource datasource;
 
-    const filePath = 'filePath';
+    const fileName = 'fileName';
 
     setUp(() {
       fileProvider = MockFileProvider();
       libraryDeserializer = MockLibraryDeserializer();
       datasource = LibraryFileDatasource(
-        filePath: filePath,
+        fileName: fileName,
         fileProvider: fileProvider,
         libraryDeserializer: libraryDeserializer,
       );
@@ -61,7 +61,7 @@ void main() {
       const fileContents = 'fileContents';
       final mockLibrary = MockLibrary();
 
-      when(() => fileProvider.getFileContents(filePath))
+      when(() => fileProvider.getFileContents(fileName))
           .thenAnswer((_) => Future.value(fileContents));
 
       when(() => libraryDeserializer.deserialize(fileContents))
@@ -75,7 +75,7 @@ void main() {
     test('Get library with non-empty file path exception', () async {
       const fileContents = 'fileContents';
 
-      when(() => fileProvider.getFileContents(filePath))
+      when(() => fileProvider.getFileContents(fileName))
           .thenAnswer((_) => Future.value(fileContents));
 
       when(() => libraryDeserializer.deserialize(fileContents))
