@@ -18,9 +18,12 @@ class BookListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FadeInImage.memoryNetwork(
-        placeholder: kTransparentImage,
-        image: imageUrl,
+      leading: Hero(
+        tag: title + imageUrl,
+        child: FadeInImage.memoryNetwork(
+          placeholder: kTransparentImage,
+          image: imageUrl,
+        ),
       ),
       title: Text(title),
       subtitle: Text(author),

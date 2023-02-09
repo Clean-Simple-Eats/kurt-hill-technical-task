@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:library_app/ui/screens/library_screen.dart';
+import 'package:library_app/ui/navigation/router.dart';
 import 'package:library_app/wiring/injection_container.dart';
 
 void main() {
@@ -12,23 +12,12 @@ class LibraryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'CSE Library App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Text(
-            'Library',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-          ),
-        ),
-        body: const LibraryScreen(),
       ),
     );
   }
