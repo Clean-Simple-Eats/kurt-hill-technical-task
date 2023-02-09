@@ -18,33 +18,42 @@ class LibraryScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
-          'Library',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.inversePrimary,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(left: 16),
+            child: Text(
+              'Library',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ),
-      body: BlocProvider(
-        create: (context) {
-          final bloc = sl<LibraryBloc>();
-          bloc.add(LandedOnLibraryEvent());
-          return bloc;
-        },
-        child: BlocBuilder<LibraryBloc, LibraryState>(
-          builder: (context, state) {
-            if (state is LibraryLoading) {
-              return _buildLoadingView();
-            } else if (state is LibraryLoaded) {
-              return _buildLoadedView(state.library);
-            } else if (state is LibraryRetrievalFailed) {
-              return _buildErrorView(context, state.failure);
-            } else {
-              return const SizedBox.shrink();
-            }
+      body: Padding(
+        padding: const EdgeInsets.only(top: 24),
+        child: BlocProvider(
+          create: (context) {
+            final bloc = sl<LibraryBloc>();
+            bloc.add(LandedOnLibraryEvent());
+            return bloc;
           },
+          child: BlocBuilder<LibraryBloc, LibraryState>(
+            builder: (context, state) {
+              if (state is LibraryLoading) {
+                return _buildLoadingView();
+              } else if (state is LibraryLoaded) {
+                return _buildLoadedView(state.library);
+              } else if (state is LibraryRetrievalFailed) {
+                return _buildErrorView(context, state.failure);
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
         ),
       ),
     );
@@ -57,19 +66,26 @@ class LibraryScreen extends StatelessWidget {
   }
 
   Widget _buildLoadedView(Library library) {
-    return ListView.builder(
-        itemCount: library.books.length,
-        itemBuilder: (context, index) {
-          final book = library.books[index];
-          return BookListItem(
-            title: book.title,
-            author: book.author,
-            imageUrl: book.imageUrl,
-            onTap: () {
-              context.go('/${AppRoute.book().path}', extra: book);
-            },
-          );
-        });
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: library.books.length,
+          itemBuilder: (context, index) {
+            final book = library.books[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: BookListItem(
+                title: book.title,
+                author: book.author,
+                imageUrl: book.imageUrl,
+                onTap: () {
+                  context.go('/${AppRoute.book().path}', extra: book);
+                },
+              ),
+            );
+          }),
+    );
   }
 
   Widget _buildErrorView(BuildContext context, Failure failure) {

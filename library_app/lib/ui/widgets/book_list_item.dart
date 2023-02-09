@@ -17,17 +17,36 @@ class BookListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Hero(
-        tag: title + imageUrl,
-        child: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          image: imageUrl,
-        ),
-      ),
-      title: Text(title),
-      subtitle: Text(author),
+    return GestureDetector(
       onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Hero(
+            tag: title + imageUrl,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                fit: BoxFit.cover,
+                image: imageUrl,
+                width: 150,
+                height: 200,
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            author,
+          ),
+        ],
+      ),
     );
   }
 }
