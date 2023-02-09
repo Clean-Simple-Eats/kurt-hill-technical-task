@@ -1,32 +1,31 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:library_app/logic/repository/library_repository.dart';
-import 'package:library_app/logic/usecases/get_library.dart';
+import 'package:library_app/repository/datasources/library_datasource.dart';
+import 'package:library_app/repository/library_repository.dart';
 import 'package:library_app/util/failure.dart';
-import 'package:library_app/util/no_params.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../shared/mocks.dart';
+import '../shared/mocks.dart';
 
-class MockLibraryRepository extends Mock implements ILibraryRepository {}
+class MockLibraryDataSource extends Mock implements ILibraryDatasource {}
 
 void main() {
   group('GetLibrary', () {
-    late ILibraryRepository repository;
-    late GetLibrary usecase;
+    late ILibraryDatasource datasource;
+    late LibraryRepository repository;
 
     setUp(() {
-      repository = MockLibraryRepository();
-      usecase = GetLibrary(repository: repository);
+      datasource = MockLibraryDataSource();
+      repository = LibraryRepository(datasource: datasource);
     });
 
     test('Get library success', () async {
       final mockLibrary = MockLibrary();
 
-      when(() => repository.getLibrary())
+      when(() => datasource.getLibrary())
           .thenAnswer((_) => Future.value(Right(mockLibrary)));
 
-      final library = await usecase(NoParams());
+      final library = await repository.getLibrary();
 
       expect(library, equals(Right(mockLibrary)));
     });
@@ -34,10 +33,10 @@ void main() {
     test('Get library failure', () async {
       final failure = Failure(message: '');
 
-      when(() => repository.getLibrary())
+      when(() => datasource.getLibrary())
           .thenAnswer((invocation) => Future.value(Left(failure)));
 
-      final library = await usecase(NoParams());
+      final library = await repository.getLibrary();
 
       expect(library, equals(Left(failure)));
     });
