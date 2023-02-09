@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:library_app/ui/widgets/book_image.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class BookListItem extends StatelessWidget {
   final String title;

@@ -15,14 +15,6 @@ class BookImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   decoration: BoxDecoration(
-    //     border: Border.all(
-    //       color: Colors.white,
-    //       width: 6,
-    //     ),
-    //     borderRadius: BorderRadius.circular(16),
-    //   ),
     return ClipRRect(
       borderRadius: BorderRadius.circular(9),
       child: FadeInImage.memoryNetwork(
@@ -32,7 +24,6 @@ class BookImage extends StatelessWidget {
         width: width,
         height: height,
       ),
-      // ),
     );
   }
 }
