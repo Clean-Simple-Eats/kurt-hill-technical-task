@@ -4,7 +4,7 @@ class Book extends Equatable {
   final String title;
   final String author;
   final String publisher;
-  final DateTime publicationDate;
+  final String publicationDate;
   final String genre;
   final List<String> tags;
   final String imageUrl;
@@ -23,9 +23,11 @@ class Book extends Equatable {
       : title = json['title'],
         author = json['author'],
         publisher = json['publisher'],
-        publicationDate = json['publicationDate'],
+        publicationDate = json['publication_date'],
         genre = json['genre'],
-        tags = json['tags'],
+        tags = (json['tags'] as List<dynamic>)
+            .map((tag) => tag.toString())
+            .toList(),
         imageUrl = json['image'];
 
   @override
