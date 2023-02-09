@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:library_app/logic/usecases/get_library.dart';
+import 'package:library_app/logic/usecases/search_library.dart';
 import 'package:library_app/presentation/bloc/library_bloc.dart';
 import 'package:library_app/presentation/bloc/library_event.dart';
 import 'package:library_app/presentation/bloc/library_state.dart';
@@ -12,9 +13,14 @@ import '../../shared/mocks.dart';
 
 class MockGetLibrary extends Mock implements GetLibrary {}
 
+class MockSearchLibrary extends Mock implements SearchLibrary {}
+
+class MockSearchLibraryParams extends Mock implements SearchLibraryParams {}
+
 void main() {
   group('LibraryBloc tests', () {
     late GetLibrary getLibrary;
+    late SearchLibrary searchLibrary;
     late LibraryBloc libraryBloc;
 
     final mockLibrary = MockLibrary();
@@ -22,7 +28,11 @@ void main() {
 
     setUp(() {
       getLibrary = MockGetLibrary();
-      libraryBloc = LibraryBloc(getLibrary: getLibrary);
+      searchLibrary = MockSearchLibrary();
+      libraryBloc = LibraryBloc(
+        getLibrary: getLibrary,
+        searchLibrary: searchLibrary,
+      );
 
       registerFallbackValue(NoParams());
     });
@@ -48,6 +58,28 @@ void main() {
       act: (bloc) => bloc.add(LandedOnLibraryEvent()),
       expect: () =>
           [LibraryLoading(), LibraryRetrievalFailed(failure: mockFailure)],
+    );
+
+    blocTest(
+      'Test search library success',
+      setUp: () {
+        when(() => searchLibrary(const SearchLibraryParams(query: 'query')))
+            .thenAnswer((_) => Future.value(Right(mockLibrary)));
+      },
+      build: () => libraryBloc,
+      act: (bloc) => bloc.add(SearchLibraryEvent(query: 'query')),
+      expect: () => [LibraryLoaded(library: mockLibrary)],
+    );
+
+    blocTest(
+      'Test search library failure',
+      setUp: () {
+        when(() => searchLibrary(const SearchLibraryParams(query: 'query')))
+            .thenAnswer((_) => Future.value(Left(mockFailure)));
+      },
+      build: () => libraryBloc,
+      act: (bloc) => bloc.add(SearchLibraryEvent(query: 'query')),
+      expect: () => [],
     );
   });
 }

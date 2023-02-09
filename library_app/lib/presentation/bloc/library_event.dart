@@ -6,3 +6,14 @@ abstract class LibraryEvent extends Equatable {
 }
 
 class LandedOnLibraryEvent extends LibraryEvent {}
+
+class SearchLibraryEvent extends LibraryEvent {
+  final String query;
+
+  SearchLibraryEvent({
+    required this.query,
+  });
+
+  @override
+  List<Object?> get props => [query];
+}

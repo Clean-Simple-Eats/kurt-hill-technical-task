@@ -4,7 +4,9 @@ import 'package:library_app/data/file_provider.dart';
 import 'package:library_app/data/serialization/library_deserializer.dart';
 import 'package:library_app/logic/repository/library_repository.dart';
 import 'package:library_app/logic/usecases/get_library.dart';
+import 'package:library_app/logic/usecases/search_library.dart';
 import 'package:library_app/presentation/bloc/library_bloc.dart';
+import 'package:library_app/repository/cache/books_cache.dart';
 import 'package:library_app/repository/datasources/library_datasource.dart';
 import 'package:library_app/repository/library_repository.dart';
 
@@ -15,6 +17,7 @@ void initDI() {
   sl.registerFactory(
     () => LibraryBloc(
       getLibrary: sl(),
+      searchLibrary: sl(),
     ),
   );
 
@@ -24,13 +27,22 @@ void initDI() {
       repository: sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => SearchLibrary(
+      repository: sl(),
+    ),
+  );
 
   // Repository
   sl.registerLazySingleton<ILibraryRepository>(
     () => LibraryRepository(
+      cache: sl(),
       datasource: sl(),
     ),
   );
+
+  // Cache
+  sl.registerLazySingleton(() => BooksCache());
 
   // Datasource
   sl.registerLazySingleton(() => FileProvider());

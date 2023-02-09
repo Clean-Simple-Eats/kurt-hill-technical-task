@@ -7,6 +7,7 @@ import 'package:library_app/presentation/bloc/library_event.dart';
 import 'package:library_app/presentation/bloc/library_state.dart';
 import 'package:library_app/ui/navigation/routes.dart';
 import 'package:library_app/ui/widgets/book_list_item.dart';
+import 'package:library_app/ui/widgets/search_bar.dart';
 import 'package:library_app/util/failure.dart';
 import 'package:library_app/wiring/injection_container.dart';
 
@@ -41,18 +42,44 @@ class LibraryScreen extends StatelessWidget {
             bloc.add(LandedOnLibraryEvent());
             return bloc;
           },
-          child: BlocBuilder<LibraryBloc, LibraryState>(
-            builder: (context, state) {
-              if (state is LibraryLoading) {
-                return _buildLoadingView();
-              } else if (state is LibraryLoaded) {
-                return _buildLoadedView(state.library);
-              } else if (state is LibraryRetrievalFailed) {
-                return _buildErrorView(context, state.failure);
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
+          child: Column(
+            children: [
+              BlocBuilder<LibraryBloc, LibraryState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: SearchBar(
+                      onTextChanged: (text) {
+                        BlocProvider.of<LibraryBloc>(context).add(
+                          SearchLibraryEvent(query: text),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<LibraryBloc, LibraryState>(
+                buildWhen: (context, state) =>
+                    state is LibraryLoading ||
+                    state is LibraryLoaded ||
+                    state is LibraryRetrievalFailed ||
+                    state is LibraryInitial,
+                builder: (context, state) {
+                  if (state is LibraryLoading) {
+                    return _buildLoadingView();
+                  } else if (state is LibraryLoaded) {
+                    return Expanded(
+                      child: _buildLoadedView(state.library),
+                    );
+                  } else if (state is LibraryRetrievalFailed) {
+                    return _buildErrorView(context, state.failure);
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ],
           ),
         ),
       ),

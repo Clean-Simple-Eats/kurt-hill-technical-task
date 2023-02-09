@@ -37,14 +37,14 @@ void main() {
   group('Deserialize Library', () {
     late LibraryDeserializer libraryDeserializer;
 
-    const books = [
+    final books = [
       Book(
         title: "To Kill a Mockingbird",
         author: "Harper Lee",
         publisher: "J. B. Lippincott & Co.",
         publicationDate: "July 11, 1960",
         genre: "Novel",
-        tags: ["Classic", "Southern Gothic", "Law"],
+        tags: const ["Classic", "Southern Gothic", "Law"],
         imageUrl: "https://picsum.photos/200",
       ),
       Book(
@@ -53,7 +53,7 @@ void main() {
         publisher: "Charles Scribner's Sons",
         publicationDate: "April 10, 1925",
         genre: "Novel",
-        tags: ["Classic", "Jazz Age", "American Dream"],
+        tags: const ["Classic", "Jazz Age", "American Dream"],
         imageUrl: "https://picsum.photos/200",
       ),
       Book(
@@ -62,12 +62,12 @@ void main() {
         publisher: "Thomas Egerton",
         publicationDate: "January 28, 1813",
         genre: "Novel",
-        tags: ["Classic", "Romance", "Society"],
+        tags: const ["Classic", "Romance", "Society"],
         imageUrl: "https://picsum.photos/200",
       ),
     ];
 
-    const library = Library(books: books);
+    final library = Library(books: books);
 
     setUp(() {
       libraryDeserializer = LibraryDeserializer();

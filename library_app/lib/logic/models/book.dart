@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 class Book extends Equatable {
+  final String id = const Uuid().v4().toString();
   final String title;
   final String author;
   final String publisher;
@@ -9,7 +11,7 @@ class Book extends Equatable {
   final List<String> tags;
   final String imageUrl;
 
-  const Book({
+  Book({
     required this.title,
     required this.author,
     required this.publisher,
