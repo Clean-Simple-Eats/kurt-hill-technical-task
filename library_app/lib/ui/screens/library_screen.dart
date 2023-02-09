@@ -19,11 +19,12 @@ class LibraryScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.only(left: 16),
+            padding: EdgeInsets.only(left: 16, top: 16),
             child: Text(
               'Library',
               style: TextStyle(

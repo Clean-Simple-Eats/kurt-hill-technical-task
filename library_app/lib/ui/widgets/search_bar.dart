@@ -13,9 +13,18 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  final _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: _focusNode,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -27,6 +36,7 @@ class _SearchBarState extends State<SearchBar> {
         suffixIcon: const Icon(Icons.search_rounded),
       ),
       onChanged: (text) => widget.onTextChanged(text),
+      onTapOutside: (_) => _focusNode.unfocus(),
     );
   }
 }

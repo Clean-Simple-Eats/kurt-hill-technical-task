@@ -31,10 +31,12 @@ class BookListItem extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 14,
             ),
           ),
           Text(
             author,
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),

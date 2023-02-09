@@ -18,6 +18,22 @@ class BookImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(9),
       child: FadeInImage.memoryNetwork(
+        imageErrorBuilder: (context, error, _) {
+          return Container(
+            width: width,
+            height: height,
+            color: Theme.of(context).colorScheme.error,
+            child: Center(
+              child: Text(
+                error.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onError,
+                ),
+              ),
+            ),
+          );
+        },
         placeholder: kTransparentImage,
         fit: BoxFit.cover,
         image: bookImageUrl,

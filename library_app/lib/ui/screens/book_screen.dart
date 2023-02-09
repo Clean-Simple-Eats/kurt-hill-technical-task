@@ -45,6 +45,7 @@ class _BookScreenState extends State<BookScreen> {
                   _buildDescription(),
                   const SizedBox(height: 16),
                   _buildTags(),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
